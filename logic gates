@@ -1,0 +1,11 @@
+module LogicGates(a,b,c,d,e,f,g,h,i);
+input a,b;
+output c,d,e,f,g,h,i;
+and(c,a,b);
+or(d,a,b);
+not(e,a);
+nand(f,a,b);
+nor(g,a,b);
+xor(h,a,b);
+xnor(i,a,b);
+endmodule
