@@ -1,0 +1,72 @@
+module encoder (
+    input E1,
+    input [7:0] D,
+    output reg [2:0] A,
+    output reg GS,
+    output reg E0
+);
+
+always @(*) begin
+    if (E1) begin
+        A = 3'b111;
+        GS = 1;
+        E0 = 1;
+    end else begin
+        GS = 1;
+        E0 = 1;
+        casex (D)
+            8'bxxxxxxx1: A = 3'b000;
+            8'bxxxxxx10: A = 3'b001;
+            8'bxxxxx100: A = 3'b010;
+            8'bxxxx1000: A = 3'b011;
+            8'bxxx10000: A = 3'b100;
+            8'bxx100000: A = 3'b101;
+            8'bx1000000: A = 3'b110;
+            8'b10000000: A = 3'b111;
+            default: begin
+                A = 3'b000;
+                GS = 0;
+                E0 = 0;
+            end
+        endcase
+    end
+end
+
+module encoder_tb;
+
+    reg E1;
+    reg [7:0] D;
+    wire [2:0] A;
+    wire GS;
+    wire E0;
+
+    encoder uut (
+        .E1(E1),
+        .D(D),
+        .A(A),
+        .GS(GS),
+        .E0(E0)
+    );
+
+    initial begin
+        E1 = 0;
+        D = 8'b00000000;
+        #10 E1 = 1;
+        D = 8'b00000001;
+        #10;
+        #10 E1 = 0;
+        D = 8'b00000000;
+        #10;
+        #10 D = 8'b00000001;
+        #10;
+        #10 D = 8'b00000010;
+        #10;
+        #10 D = 8'b00001000;
+        #10;
+        #10 D = 8'b00000110;
+        #10;
+        #10 D = 8'b10000000;
+        #10;
+        #10 D = 8'b11000000;
+        #10;
+    end
