@@ -1,0 +1,67 @@
+module to1mux(
+input a,b,c,
+input [1:0] sel,
+output reg m );
+always@(*)
+case(sel)
+2'b00:m=a;
+2'b01:m=b;
+2'b10:m=c;
+default:m=1'b0;
+endcase
+endmodule
+
+module to1mux_tb;
+reg a,b,c,sel;
+wire m;
+to1mux uut( .a(a),.b(b),.c(c),.sel(sel),.m(m));
+initial begin
+sel=00;a=0;b=0;c=0;
+#10;
+sel=00;a=0;b=0;c=1;
+#10;
+sel=00;a=0;b=1;c=0;
+#10;
+sel=00;a=0;b=1;c=1;
+#10;
+sel=00;a=1;b=0;c=0;
+#10;
+sel=00;a=1;b=0;c=1;
+#10;
+sel=00;a=1;b=1;c=0;
+#10;
+sel=00;a=1;b=1;c=1;
+#10;
+sel=01;a=0;b=0;c=0;
+#10;
+sel=01;a=0;b=0;c=1;
+#10;
+sel=01;a=0;b=1;c=0;
+#10;
+sel=01;a=0;b=1;c=1;
+#10;
+sel=01;a=1;b=0;c=0;
+#10;
+sel=01;a=1;b=0;c=1;
+#10;
+sel=01;a=1;b=1;c=0;
+#10;
+sel=01;a=1;b=1;c=1;
+#10;
+sel=10;a=0;b=0;c=0;
+#10;
+sel=10;a=0;b=0;c=1;
+#10;
+sel=10;a=0;b=1;c=0;
+#10;
+sel=10;a=0;b=1;c=1;
+#10;
+sel=10;a=1;b=0;c=0;
+#10;
+sel=10;a=1;b=0;c=1;
+#10;
+sel=10;a=1;b=1;c=0;
+#10;
+sel=10;a=1;b=1;c=1;
+end
+endmodule
