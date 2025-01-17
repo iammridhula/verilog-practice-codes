@@ -1,0 +1,31 @@
+module mux_gatelevel(
+input x,y,sel,
+output m );
+wire w1,w2;
+and a1(w1,x,~sel);
+and a2(w2,sel,y);
+or a3(m,w1,w2);
+endmodule
+
+module mux_gatelevel_tb;
+reg x,y,sel;
+wire m;
+mux_gatelevel uut(.x(x),.y(y),.sel(sel),.m(m));
+initial begin
+x=0; y=0; sel=0;
+#10;
+x=0; y=1; sel=0;
+#10;
+x=1; y=0; sel=0;
+#10;
+x=1; x=1; sel=0;
+#10;
+x=0; y=0; sel=1;
+#10;
+x=0; y=1; sel=1;
+#10;
+x=1; y=0; sel=1;
+#10;
+x=1; x=1; sel=1;
+end
+endmodule
