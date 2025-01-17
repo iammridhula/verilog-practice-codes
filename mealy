@@ -1,0 +1,60 @@
+module mealy(input clk, input reset, input x, output reg parity);
+    reg state, nextstate;
+    parameter S0 = 0, S1 = 1;
+    always @(posedge clk or posedge reset)
+        if (reset)
+            state <= S0;
+        else
+            state <= nextstate;
+    always @(*) begin
+        parity = 1'b0;
+        case (state)
+            S0: if (x) begin
+                    parity = 1;
+                    nextstate = S1;
+                end else
+                    nextstate = S0;
+            S1: if (x)
+                    nextstate = S0;
+                else begin
+                    parity = 1;
+                    nextstate = S1;
+                end
+            default:
+                nextstate = S0;
+        endcase
+    end
+endmodule
+
+module mealy_tb;
+    reg clk;                
+    reg reset;             
+    reg x;                 
+    wire parity;           
+    mealy uut (.clk(clk),.reset(reset),.x(x),.parity(parity));
+    initial begin
+        clk = 0;
+        forever #10 clk = ~clk; 
+    end
+    initial begin
+        reset = 1;
+        x = 0;
+        #20 reset = 0;
+        #20 x = 1;  
+        #20 x = 0;  
+        #20 x = 1;  
+        #20 x = 1;  
+        #20 x = 0;  
+        #20 x = 0;  
+        #20 x = 1;  
+        #20 x = 0; 
+        #20 reset = 1;
+        #20 reset = 0;
+        #20 x = 1; 
+        #20 x = 0;  
+        #20 x = 1;  
+        #50 $stop;
+    end
+endmodule
+
+
