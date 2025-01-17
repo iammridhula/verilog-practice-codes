@@ -1,0 +1,28 @@
+module mux_dataflow(
+input x,y,sel,
+output m);
+assign m= sel ? y : x;
+endmodule
+
+module mux_dataflow_tb;
+reg x,y,sel;
+wire m;
+mux_dataflow uut(.x(x),.y(y),.sel(sel),.m(m));
+initial begin
+x=0; y=0; sel=0;
+#10;
+x=0; y=1; sel=0;
+#10;
+x=1; y=0; sel=0;
+#10;
+x=1; x=1; sel=0;
+#10;
+x=0; y=0; sel=1;
+#10;
+x=0; y=1; sel=1;
+#10;
+x=1; y=0; sel=1;
+#10;
+x=1; x=1; sel=1;
+end
+endmodule
