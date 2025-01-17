@@ -1,0 +1,53 @@
+module down_counter(
+    input clk,        
+    input clear,       
+    input enable,       
+    input load,         
+    input [3:0] D,      
+    output reg [3:0] Q       
+);
+
+    always @(posedge clk) 
+    begin
+        if (clear)       
+            Q <= 4'b0000;
+        else if (load)       
+            Q <= D;
+        else if (enable)     
+            Q <= Q - 1;
+    end
+
+endmodule
+
+module down_counter_tb;
+    reg clk;                  
+    reg clear;            
+    reg enable;      
+    reg load;                 
+    reg [3:0] D;           
+    wire [3:0] Q;      
+    down_counter uut (.clk(clk),.clear(clear),.enable(enable),.load(load),.D(D),.Q(Q));
+    initial begin
+        clk = 0;
+        forever #10 clk = ~clk; 
+    end
+    initial begin
+        clear = 0;
+        enable = 0;
+        load = 0;
+        D = 4'b0000;
+        #15 clear = 1;
+        #20 clear = 0;
+        #10 load = 1; D = 4'b1010; 
+        #20 load = 0;
+        #10 enable = 1;
+        #100 enable = 0; 
+        #10 load = 1; D = 4'b0101;
+        #20 load = 0;
+        #10 enable = 1;
+        #50 enable = 0;
+        #10 clear = 1;
+        #20 clear = 0;
+        #50 $stop;
+    end
+endmodule
