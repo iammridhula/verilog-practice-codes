@@ -1,0 +1,79 @@
+module register(
+    input clk,reset,load,  
+    input [3:0] D,   
+    output reg [3:0] Q );
+
+    always @(posedge clk) 
+    begin
+        if (reset)           
+            Q <= 4'b0000;
+        else if (load)
+            Q <= D;
+    end
+endmodule
+
+module register_tb;
+    reg clk;               
+    reg reset;                
+    reg load;                 
+    reg [3:0] D;              
+    wire [3:0] Q;             
+register uut (.clk(clk),.reset(reset),.load(load),.D(D),.Q(Q));
+
+initial begin
+  clk = 0;
+  forever #10 clk = ~clk;
+end
+initial begin
+ reset = 0;
+ load = 0;
+ D = 4'b0000;
+        #20 reset = 1;
+        #10 reset = 0;
+        #10 load=1; D = 4'b0001;
+        #20 reset = 1;
+        #10 reset = 0;
+        #10 D = 4'b0010;
+        #20 reset = 1;
+        #10 reset = 0;
+        #10 D = 4'b0011;
+        #20 reset = 1;
+        #10 reset = 0;
+        #10 D = 4'b0100;
+        #20 reset = 1;
+        #10 reset = 0;
+        #10 D = 4'b0101;
+        #20 reset = 1;
+        #10 reset = 0;
+        #10 D = 4'b0110;
+        #20 reset = 1;
+        #10 reset = 0;
+        #10 D = 4'b0111;
+        #20 reset = 1;
+        #10 reset = 0;
+        #10 D = 4'b1000;
+        #20 reset = 1;
+        #10 reset = 0;
+        #10 D = 4'b1001;
+        #20 reset = 1;
+        #10 reset = 0;
+        #10 D = 4'b1010;
+        #20 reset = 1;
+        #10 reset = 0;
+        #10 D = 4'b1011;
+        #20 reset = 1;
+        #10 reset = 0;
+        #10 D = 4'b1100;
+        #20 reset = 1;
+        #10 reset = 0;
+        #10 D = 4'b1101;
+        #20 reset = 1;
+        #10 reset = 0;
+        #10 D = 4'b1110;
+        #20 reset = 1;
+        #10 reset = 0;
+        #10 D = 4'b1111;
+        #20 reset = 1;
+        #10 reset = 0;
+end
+endmodule
