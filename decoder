@@ -1,0 +1,39 @@
+module decoder(
+input [2:0] x,
+output reg [7:0] y );
+always@(x)
+begin
+case(x)
+3'b000:y=8'b00000001;
+3'b001:y=8'b00000010;
+3'b010:y=8'b00000100;
+3'b011:y=8'b00001000;
+3'b100:y=8'b00010000;
+3'b101:y=8'b00100000;
+3'b110:y=8'b01000000;
+3'b111:y=8'b10000000;
+default:y=8'b00000000;
+endcase
+
+module decoder_tb;
+reg [2:0] x;
+wire [7:0] y;
+decoder uut(.x(x),.y(y));
+initial begin
+x=3'b000;
+#10;
+x=3'b001;
+#10;
+x=3'b010;
+#10;
+x=3'b011;
+#10;
+x=3'b100;
+#10;
+x=3'b101;
+#10;
+x=3'b110;
+#10;
+x=3'b111;
+end
+endmodule
